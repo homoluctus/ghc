@@ -1,0 +1,23 @@
+{
+  "count": 2,
+  "repositories": [
+    {
+      "description": "The CLI tool to query AWS CloudWatch Logs Insights :mag:",
+      "is_archive": false,
+      "is_template": false,
+      "language": "Python",
+      "language_logo_url": "https://cdn.jsdelivr.net/npm/programming-languages-logos/src/python/python_24x24.png",
+      "name": "pyinsights",
+      "url": "https://github.com/homoluctus/pyinsights"
+    },
+    {
+      "description": "Scan the vulnerability of Docker images stored in ECR",
+      "is_archive": false,
+      "is_template": false,
+      "language": "Python",
+      "language_logo_url": "https://cdn.jsdelivr.net/npm/programming-languages-logos/src/python/python_24x24.png",
+      "name": "ecranner",
+      "url": "https://github.com/homoluctus/ecranner"
+    }
+  ]
+}
