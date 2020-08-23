@@ -11,13 +11,12 @@ from ghc.logo import LanguageLogo
 class Repository:
     isArchived: InitVar[bool]
     isTemplate: InitVar[bool]
-    primaryLanguage: InitVar[Dict[str, str]]
+    primaryLanguage: InitVar[Optional[Dict[str, str]]]
 
     name: str
     url: str
-    description: str = ''
-
-    language: str = field(init=False)
+    description: Optional[str] = None
+    language: Optional[str] = field(init=False, default=None)
     language_logo_url: Optional[str] = field(init=False, default=None)
     is_archive: bool = field(init=False)
     is_template: bool = field(init=False)
@@ -25,9 +24,10 @@ class Repository:
     def __post_init__(self, isArchived, isTemplate, primaryLanguage) -> None:
         self.is_archive = isArchived
         self.is_template = isTemplate
-        lang = primaryLanguage['name']
-        self.language = lang
-        self.language_logo_url = LanguageLogo.from_lang(lang)
+
+        if primaryLanguage and (lang := primaryLanguage['name']):
+            self.language = lang
+            self.language_logo_url = LanguageLogo.from_lang(lang)
 
     def to_dict(self) -> Dict[str, Union[str, bool]]:
         return asdict(self)
@@ -40,11 +40,7 @@ class SearchQueryString:
     q_topic: ClassVar[str] = 'topic:{topic}'
 
     owner: str
-    topics: Union[List[str], str, None] = None
-
-    def __post_init__(self) -> None:
-        if isinstance(self.topics, str):
-            self.topics = [self.topics]
+    topics: Optional[List[str]] = None
 
     def to_string(self) -> str:
         query = self.q_user.format(user=self.owner)
