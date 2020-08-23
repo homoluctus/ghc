@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ghc"
-version = "0.1.0"
+version = "0.1.1"
 description = "List up GitHub user / org repositories filtered by topics (ghc = GitHub Collector)"
 authors = ["homoluctus <w.slife18sy@gmail.com>"]
 license = "MIT"
@@ -9,7 +9,6 @@ repository = "https://github.com/homoluctus/gh-collector"
 keywords = ["GitHub", "GraphQL"]
 classifiers = [
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.7",
   "Programming Language :: Python :: 3.8"
 ]
 packages = [
