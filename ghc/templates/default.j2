@@ -1,0 +1,9 @@
+# Repositories
+
+Total Count: {{ count }}
+
+|Name|URL|Language|Archived|Template|Description|
+|:--:|:--:|:--:|:--:|:--:|:--|
+{%- for repo in repositories %}
+|{{ repo.name }}|{{ repo.url }}|{% if repo.language_logo_url %}![{{ repo.language }}]({{ repo.language_logo_url }}){% else %}{{ repo.language }}{% endif %}|{{ repo.is_archive }}|{{ repo.is_template }}|{{ repo.description }}|
+{%- endfor %}
