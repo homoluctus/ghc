@@ -1,5 +1,9 @@
 # ghc (GitHub Collector)
 
+![PyPI](https://img.shields.io/pypi/v/ghc)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ghc)
+![GitHub](https://img.shields.io/github/license/homoluctus/ghc)
+
 List up GitHub user / org repositories filtered by topics
 
 <!-- TOC depthFrom:2 -->
