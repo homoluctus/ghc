@@ -6,7 +6,7 @@
       "is_archive": false,
       "is_template": false,
       "language": "Python",
-      "language_icon": "![python](https://homoluctus/ghc/icons/python.png)",
+      "language_logo_url": "https://cdn.jsdelivr.net/npm/programming-languages-logos/src/python/python_24x24.png",
       "name": "pyinsights",
       "url": "https://github.com/homoluctus/pyinsights"
     },
@@ -15,7 +15,7 @@
       "is_archive": false,
       "is_template": false,
       "language": "Python",
-      "language_icon": "![python](https://homoluctus/ghc/icons/python.png)",
+      "language_logo_url": "https://cdn.jsdelivr.net/npm/programming-languages-logos/src/python/python_24x24.png",
       "name": "ecranner",
       "url": "https://github.com/homoluctus/ecranner"
     }
