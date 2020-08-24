@@ -1,4 +1,5 @@
 from dataclasses import InitVar, asdict, dataclass, field
+from operator import itemgetter
 from typing import Any, ClassVar, Dict, List, Optional, Tuple, Union
 
 import requests
@@ -115,9 +116,10 @@ def search_repositories_by_topics(
         res = client.request(query={'query': query})
         search_result = res['data']['search']
         result = {'count': search_result['repositoryCount']}
-        result['repositories'] = [
+        tmp = [
             Repository(**edge['node']).to_dict()
             for edge in search_result['edges']]
+        result['repositories'] = sorted(tmp, key=itemgetter('name'))
         return result
     except KeyError:
         raise GitHubRequestError(f'Unexpected response: {res}')
