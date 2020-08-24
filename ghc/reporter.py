@@ -5,7 +5,7 @@ from typing import IO, Any, Optional
 
 from jinja2 import Environment, FileSystemLoader, Template
 
-from ghc.exceptions import TemplateNotFoundError
+from ghc.exceptions import ReportError, TemplateNotFoundError
 from ghc.stream import stream
 
 
@@ -71,6 +71,11 @@ REPORTER_MAP = {
 
 
 def report(record: Any, fmt: str, filename: Optional[str] = None) -> None:
-    with stream(filename) as fd:
-        reporter = REPORTER_MAP[fmt]()
-        reporter.report(fd, record)
+    try:
+        with stream(filename) as fd:
+            reporter = REPORTER_MAP[fmt]()
+            reporter.report(fd, record)
+    except TemplateNotFoundError:
+        raise
+    except Exception as err:
+        raise ReportError(err)

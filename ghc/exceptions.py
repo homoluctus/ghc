@@ -19,3 +19,7 @@ class GitHubTokenUnsetError(Base):
 
     def __init__(self) -> None:
         super().__init__(self.msg)
+
+
+class ReportError(Base):
+    """Raised when fails to output the results"""
