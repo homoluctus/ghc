@@ -13,7 +13,8 @@ List up GitHub user / org repositories filtered by topics
 - [Usage](#usage)
 - [Examples](#examples)
   - [Output JSON](#output-json)
-  - [Output markdown](#output-markdown)
+  - [Output Markdown](#output-markdown)
+  - [Use GHC_TOKEN](#use-ghc_token)
 - [Roadmap](#roadmap)
 
 <!-- /TOC -->
@@ -45,7 +46,7 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
-  --token TOKEN         Personal Access Token to access the private repository
+  --token TOKEN         Personal Access Token to access the private repository. Use the environment variable "GHC_TOKEN" instead.
   -t [TOPICS [TOPICS ...]], --topics [TOPICS [TOPICS ...]]
                         Filter repository using topics
   -f {json,md}, --format {json,md}
@@ -94,7 +95,7 @@ ghc homoluctus --token xxxxxxxx -f json -t python aws | jq
 
 </details>
 
-### Output markdown
+### Output Markdown
 
 
 ```bash
@@ -131,6 +132,12 @@ Total Count: 2
 |ecranner|https://github.com/homoluctus/ecranner|![Python](https://cdn.jsdelivr.net/npm/programming-languages-logos/src/python/python_24x24.png)|False|False|Scan the vulnerability of Docker images stored in ECR|
 
 </details>
+
+### Use GHC_TOKEN
+
+```bash
+GHC_TOKEN=xxxxxxxx ghc homoluctus -f json -t python aws
+```
 
 ## Roadmap
 
