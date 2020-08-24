@@ -19,7 +19,7 @@ class CliOption:
         self.fmt = self.fmt.lower()
 
         if self.token is None:
-            self.token = get_env('token', ignore_error=True)
+            self.token = get_env('GHC_TOKEN', ignore_error=True)
 
 
 def get_parser() -> argparse.ArgumentParser:
@@ -38,7 +38,10 @@ def setup_options(parser: argparse.ArgumentParser) -> None:
 
     parser.add_argument(
         '--token',
-        help='Personal Access Token to access the private repository'
+        help='''
+        Personal Access Token to access the private repository.
+        Use the environment variable "GHC_TOKEN" instead.
+        '''
     )
 
     parser.add_argument(
