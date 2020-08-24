@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from typing import Any, List, Optional
 
 from ghc import __version__
+from ghc.exceptions import GitHubTokenUnsetError
 from ghc.utils import get_env
 
 
@@ -20,6 +21,12 @@ class CliOption:
 
         if self.token is None:
             self.token = get_env('GHC_TOKEN', ignore_error=True)
+
+        self.exists_token()
+
+    def exists_token(self) -> None:
+        if not self.token:
+            raise GitHubTokenUnsetError()
 
 
 def get_parser() -> argparse.ArgumentParser:
@@ -39,7 +46,7 @@ def setup_options(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         '--token',
         help='''
-        Personal Access Token to access the private repository.
+        Personal Access Token to access repositories.
         Use the environment variable "GHC_TOKEN" instead.
         '''
     )

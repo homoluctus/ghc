@@ -1,4 +1,5 @@
 from ghc.cli import parse_options
+from ghc.exceptions import GitHubTokenUnsetError
 from ghc.github import search_repositories_by_topics
 from ghc.logger import get_logger
 from ghc.reporter import report
@@ -8,7 +9,14 @@ logger = get_logger(__name__)
 
 
 def main() -> bool:
-    options = parse_options()
+    try:
+        options = parse_options()
+    except GitHubTokenUnsetError as err:
+        logger.error(err)
+        return False
+    except Exception as err:
+        logger.error(err)
+        return False
 
     try:
         result = search_repositories_by_topics(
