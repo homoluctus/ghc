@@ -110,9 +110,9 @@ def search_repositories_by_topics(
     client = GitHub(token=token)
     search_q_str = SearchQueryString(**kwargs).to_string()
     query = SEARCH_QUERY % search_q_str
-    res = client.request(query={'query': query})
 
     try:
+        res = client.request(query={'query': query})
         search_result = res['data']['search']
         result = {'count': search_result['repositoryCount']}
         result['repositories'] = [
@@ -121,3 +121,5 @@ def search_repositories_by_topics(
         return result
     except KeyError:
         raise GitHubRequestError(f'Unexpected response: {res}')
+    except Exception as err:
+        raise GitHubRequestError(err)
