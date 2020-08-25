@@ -180,7 +180,7 @@ ghc homoluctus --token xxxxxxxx -f json -t python
 
 
 ```bash
-nghc homoluctus --token xxxxxxx -f md -t python aws
+nghc homoluctus --token xxxxxxx -f md -t python
 ```
 
 <details>
