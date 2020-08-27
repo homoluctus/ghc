@@ -13,7 +13,7 @@ from ghc.reporter import report
 logger = get_logger(__name__)
 
 
-def main() -> bool:
+def main() -> None:
     logger.info('START')
 
     try:
@@ -41,8 +41,8 @@ def main() -> bool:
         sys.exit(1)
 
     logger.info('DONE')
-    return True
+    sys.exit(0)
 
 
 if __name__ == '__main__':
-    sys.exit(main())
+    main()
