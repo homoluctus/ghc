@@ -14,8 +14,6 @@ logger = get_logger(__name__)
 
 
 def main() -> None:
-    logger.info('START')
-
     try:
         options = parse_options()
 
@@ -25,6 +23,9 @@ def main() -> None:
 
         report(result, fmt=options.fmt, filename=options.filename)
         logger.info('Completed report!!')
+    except KeyboardInterrupt:
+        logger.error('Abort')
+        sys.exit(1)
     except GitHubTokenUnsetError as err:
         logger.error(err)
         sys.exit(1)
@@ -39,9 +40,6 @@ def main() -> None:
     except Exception as err:
         logger.error(err)
         sys.exit(1)
-
-    logger.info('DONE')
-    sys.exit(0)
 
 
 if __name__ == '__main__':
