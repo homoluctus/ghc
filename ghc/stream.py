@@ -16,13 +16,6 @@ class StreamHandler:
     def _open(self) -> IO[str]:
         return self.stream
 
-    def flush(self) -> None:
-        try:
-            if self.stream and hasattr(self.stream, 'flush'):
-                self.stream.flush()
-        except Exception:
-            pass
-
     def close(self) -> None:
         pass
 
