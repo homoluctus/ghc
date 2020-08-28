@@ -16,7 +16,7 @@ class Repository:
 
     name: str
     url: str
-    description: Optional[str] = None
+    description: Optional[str] = ''
     language: Optional[str] = field(init=False, default=None)
     language_logo_url: Optional[str] = field(init=False, default=None)
     is_archive: bool = field(init=False)
@@ -26,7 +26,7 @@ class Repository:
         self.is_archive = isArchived
         self.is_template = isTemplate
 
-        if primaryLanguage and (lang := primaryLanguage['name']):
+        if primaryLanguage and (lang := primaryLanguage.get('name')):
             self.language = lang
             self.language_logo_url = LanguageLogo.from_lang(lang)
 
