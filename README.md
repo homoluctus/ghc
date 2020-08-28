@@ -27,6 +27,7 @@ List up GitHub user / org repositories filtered by topics
   - JSON
   - Markdown
 - Output the results to stdout or file
+  - Specify 'ghc/result.md' as output filename and if 'ghc' does not exist, create new directory
 
 ## Installtion
 

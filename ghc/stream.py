@@ -1,3 +1,4 @@
+import os
 import sys
 from dataclasses import dataclass, field
 from typing import IO, Optional, Union
@@ -29,6 +30,14 @@ class FileHandler(StreamHandler):
     newline: Optional[str] = None
 
     stream: Optional[IO[str]] = field(init=False, default=None)  # type: ignore
+
+    def __post_init__(self) -> None:
+        self.mkdir()
+
+    def mkdir(self) -> None:
+        fp = self.filename.split('/')
+        if len(fp) > 1:
+            os.makedirs('/'.join(fp[:-1]), mode=0o755, exist_ok=True)
 
     def _open(self) -> IO[str]:
         if self.stream is None:
