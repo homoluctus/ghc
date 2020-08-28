@@ -68,7 +68,7 @@ def setup_options(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         '-o', '--output',
         dest='filename',
-        help='Filename to output the results. Output stdout if not specified'
+        help='Filename to save the results. Output to stdout if not specified'
     )
 
     parser.add_argument(
