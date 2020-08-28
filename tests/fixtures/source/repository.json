@@ -1,0 +1,50 @@
+[
+  {
+    "name": "ghc",
+    "description": "List up GitHub user / org repositories filtered by topics (ghc = GitHub Collector)",
+    "isArchived": false,
+    "isTemplate": false,
+    "url": "https://github.com/homoluctus/ghc",
+    "primaryLanguage": {
+      "name": "Python"
+    }
+  },
+  {
+    "name": "sqldiffer",
+    "description": "Check the difference of MySQL schema (CREATE TABLE)",
+    "isArchived": false,
+    "isTemplate": false,
+    "url": "https://github.com/homoluctus/sqldiffer",
+    "primaryLanguage": {
+      "name": "Python"
+    }
+  },
+  {
+    "name": "python-template",
+    "description": "GitHub template for Python3.8",
+    "isArchived": false,
+    "isTemplate": true,
+    "url": "https://github.com/homoluctus/python-template",
+    "primaryLanguage": {
+      "name": "Makefile"
+    }
+  },
+  {
+    "name": "algorithms",
+    "description": null,
+    "isArchived": false,
+    "isTemplate": false,
+    "url": "https://github.com/homoluctus/algorithms",
+    "primaryLanguage": null
+  },
+  {
+    "name": "pip-audit-action",
+    "description": "Audit action for python dependencies (requirements.txt, Pipfile and poetry.lock)",
+    "isArchived": false,
+    "isTemplate": false,
+    "url": "https://github.com/homoluctus/pip-audit-action",
+    "primaryLanguage": {
+      "name": "Shell"
+    }
+  }
+]
