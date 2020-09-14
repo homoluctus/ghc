@@ -28,7 +28,7 @@ jobs:
         run: make release username=$POETRY_USERNAME password=$POETRY_PASSWORD
 
   github:
-    name: Release
+    name: Release to GitHub
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -38,4 +38,6 @@ jobs:
           node-version: '12.x'
 
       - name: Release
-        run: npx github-release-notes release --token=${{ secrets.GITHUB_TOKEN }} -d -D prs
+        run: |
+          tag=$(echo $GITHUB_REF | sed 's/refs\/tags\///g')
+          npx github-release-notes release --token=${{ secrets.GITHUB_TOKEN }} -d -D prs --tags="$tag"
