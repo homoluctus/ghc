@@ -6,6 +6,7 @@ import requests
 
 from ghc.exceptions import GitHubRequestError
 from ghc.logo import LanguageLogo
+from ghc.query import SEARCH_REPOSITORY
 
 
 @dataclass
@@ -54,6 +55,15 @@ class SearchQueryString:
 
 
 @dataclass
+class GraphqlVariables:
+    search_query_str: Optional[str] = None
+    end_cursor: Optional[str] = None
+
+    def to_dict(self) -> Dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass
 class GitHub:
     url: ClassVar[str] = 'https://api.github.com/graphql'
 
@@ -69,59 +79,46 @@ class GitHub:
 
     def request(
             self,
-            query: Dict[str, Any],
-            timeout: Union[int, Tuple[float, float]] = (10, 60),) -> Any:
+            variables: GraphqlVariables,
+            timeout: Union[int, Tuple[float, float]] = (20, 60),) -> Any:
+        payload = {
+            'query': SEARCH_REPOSITORY,
+            'variables': variables.to_dict()
+        }
+
         headers = self.build_headers()
         res = requests.post(
             self.url, headers=headers,
-            json=query, timeout=timeout)
+            json=payload, timeout=timeout)
 
         if res.status_code != 200:
             res.raise_for_status()
 
-        return res.json()
+        try:
+            body = res.json()
+            result: Dict[str, Any] = body['data']['search']
+        except KeyError:
+            raise GitHubRequestError(f'Unexpected response: {res}')
 
+        if (pagination := result.get('pageInfo')) \
+                and pagination.get('hasNextPage'):
+            variables.end_cursor = pagination['endCursor']
+            tmp = self.request(variables=variables, timeout=timeout)
+            result['edges'].extend(tmp['edges'])
 
-SEARCH_QUERY = '''
-query {
-    search(type: REPOSITORY, first: 100, query: "%s") {
-        repositoryCount
-        edges {
-            node {
-                ... on Repository {
-                    name
-                    description
-                    isArchived
-                    isTemplate
-                    url
-                    primaryLanguage {
-                        name
-                    }
-                }
-            }
-        }
-    }
-}
-'''
+        return result
 
 
 def search_repositories_by_topics(
         token: Optional[str] = None,
         **kwargs: Any) -> Dict[str, Any]:
     client = GitHub(token=token)
-    search_q_str = SearchQueryString(**kwargs).to_string()
-    query = SEARCH_QUERY % search_q_str
+    search_query_str = SearchQueryString(**kwargs).to_string()
 
-    try:
-        res = client.request(query={'query': query})
-        search_result = res['data']['search']
-        result = {'count': search_result['repositoryCount']}
-        tmp = [
-            Repository(**edge['node']).to_dict()
-            for edge in search_result['edges']]
-        result['repositories'] = sorted(tmp, key=itemgetter('name'))
-        return result
-    except KeyError:
-        raise GitHubRequestError(f'Unexpected response: {res}')
-    except Exception as err:
-        raise GitHubRequestError(err)
+    res = client.request(variables=GraphqlVariables(search_query_str))
+    result = {'count': res['repositoryCount']}
+    tmp = [
+        Repository(**edge['node']).to_dict()
+        for edge in res['edges']]
+    result['repositories'] = sorted(tmp, key=itemgetter('name'))
+    return result
