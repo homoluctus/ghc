@@ -28,31 +28,14 @@ jobs:
         run: make release username=$POETRY_USERNAME password=$POETRY_PASSWORD
 
   github:
-    name: Release to GitHub
-    runs-on: macos-latest
+    name: Release
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
-      - name: Create release notes
-        id: create-release-notes
-        run: |
-          brew tap git-chglog/git-chglog
-          brew install git-chglog
-
-          TAG=$(echo "$GITHUB_REF" | sed 's/refs\/tags\///g')
-          echo "tag: $TAG"
-
-          CHANGELOG=$(git-chglog "$TAG")
-
-          echo "$CHANGELOG"
-          echo "::set-output name=changelog::$CHANGELOG"
-
-      - uses: actions/create-release@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-node@v1
         with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
-          body: ${{ steps.create-release-notes.outputs.changelog }}
-          draft: false
-          prerelease: false
+          node-version: '12.x'
+
+      - name: Release
+        run: npx github-release-notes release --token=${{ secrets.GITHUB_TOKEN }} -d -D prs
