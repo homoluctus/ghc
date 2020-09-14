@@ -26,9 +26,6 @@ def main() -> None:
     except KeyboardInterrupt:
         logger.error('Abort')
         sys.exit(1)
-    except GitHubTokenUnsetError as err:
-        logger.error(err)
-        sys.exit(1)
     except GitHubRequestError as err:
         logger.error(err)
         logger.error('Failed to request to GitHub')
@@ -37,7 +34,7 @@ def main() -> None:
         logger.error(err)
         logger.error('Failed to output the result')
         sys.exit(1)
-    except Exception as err:
+    except (GitHubTokenUnsetError, Exception) as err:
         logger.error(err)
         sys.exit(1)
 
