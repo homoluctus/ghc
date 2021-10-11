@@ -17,7 +17,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.8"
-Jinja2 = "^2.11.2"
+Jinja2 = ">=2.11.2,<4.0.0"
 requests = "^2.24.0"
 
 [tool.poetry.dev-dependencies]
